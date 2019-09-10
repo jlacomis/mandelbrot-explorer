@@ -1,0 +1,6 @@
+(library
+ (inline_tests)
+ (name drawing)
+ (libraries core graphics)
+ (preprocess
+  (pps ppx_inline_test)))

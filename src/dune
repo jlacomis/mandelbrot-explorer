@@ -1,4 +1,4 @@
 (executable
  (public_name mandelbrot)
  (name main)
- (libraries core graphics unix))
+ (libraries core drawing graphics unix))
