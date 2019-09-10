@@ -143,7 +143,12 @@ let () =
     | true ->
       begin
         match fst_event.key with
+        (* Zoom out *)
         | 'z' ->
+          draw iterations start_range;
+          loop iterations start_range
+        (* Reset *)
+        | 'r' ->
           draw default_iterations start_range;
           loop default_iterations start_range
         | '+' ->
