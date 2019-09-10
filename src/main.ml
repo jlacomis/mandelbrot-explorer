@@ -184,11 +184,13 @@ let () =
           draw default_iterations start_range;
           loop default_iterations start_range
         | '+' ->
-          let iterations = iterations + 5 in
+          let increment = max (iterations / 5) 1 in
+          let iterations = iterations + increment in
           draw iterations range;
           loop iterations range
         | '-' ->
-          let iterations = iterations - 5 in
+          let decrement = max (iterations / 5) 1 in
+          let iterations = iterations - decrement in
           draw iterations range;
           loop iterations range
         | _ -> ()
