@@ -138,34 +138,39 @@ let () =
   ignore (Graphics.wait_next_event [ Key_pressed; ]);
   draw default_iterations start_range;
   let rec loop iterations range =
+    let redraw iterations range =
+      draw iterations range;
+      loop iterations range
+    in
     let fst_event = Graphics.wait_next_event [ Button_down; Key_pressed; ] in
     match fst_event.keypressed with
     | true ->
       begin
         match fst_event.key with
+        (* Redraw *)
+        | 'd' ->
+          redraw iterations range
         (* Zoom out *)
         | 'z' ->
-          draw iterations start_range;
-          loop iterations start_range
+          redraw iterations start_range
         (* Reset *)
         | 'r' ->
-          draw default_iterations start_range;
-          loop default_iterations start_range
+          redraw default_iterations start_range
+        (* Increase iterations *)
         | '+' ->
           let increment = max (iterations / 5) 1 in
           let iterations = iterations + increment in
-          draw iterations range;
-          loop iterations range
+          redraw iterations range
+        (* Decrease iterations *)
         | '-' ->
           let decrement = max (iterations / 5) 1 in
           let iterations = iterations - decrement in
-          draw iterations range;
-          loop iterations range
-        | _ -> ()
+          redraw iterations range
+        (* Quit *)
+        | 'q' | _ -> ()
       end
     | false ->
        let new_range = get_rectangle fst_event range in
-       draw iterations new_range;
-       loop iterations new_range
+       redraw iterations new_range
   in
   loop default_iterations start_range
