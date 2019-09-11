@@ -1,4 +1,6 @@
 (executable
  (public_name mandelbrot)
  (name main)
- (libraries core drawing graphics unix))
+ (libraries core drawing graphics unix)
+ (preprocess (pps ppx_deriving.show))
+)

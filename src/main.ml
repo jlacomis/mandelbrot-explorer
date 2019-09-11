@@ -1,16 +1,20 @@
 open Drawing
 
-type point =
-  { x : float
-  ; y : float
-  }
+type coordinate =
+  float [@printer fun fmt -> fprintf fmt "%.16f"]
+[@@deriving show]
 
-let string_of_point p = Format.sprintf "%.20f %.20f" p.x p.y
+type point =
+  { x : coordinate
+  ; y : coordinate
+  }
+[@@deriving show { with_path = false } ]
 
 type range =
   { min : point
   ; max : point
   }
+[@@deriving show]
 
 let init () =
   let open Graphics in
@@ -112,9 +116,9 @@ let get_rectangle (fst_event : Graphics.status) range =
 
 let draw_scale range =
   let open Graphics in
-  let min_string = string_of_point range.min in
+  let min_string = show_point range.min in
   draw_string_with_box min_string 0 0;
-  let max_string = string_of_point range.max in
+  let max_string = show_point range.max in
   draw_string_with_box_tr max_string (size_x ()) (size_y ())
 
 let draw_message () =
